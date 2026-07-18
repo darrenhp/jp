@@ -1,0 +1,15 @@
+# Dependencies (installed locally, never committed)
+node_modules/
+
+# WorkBuddy workspace internal data (tool state, not project source)
+.workbuddy/
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+*.log
+
+# Build / cache output (none currently, reserved)
+dist/
+.cache/
+*.tmp
