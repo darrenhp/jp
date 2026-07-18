@@ -301,17 +301,21 @@
   /* ---------- 思维导图 ---------- */
   function initMindmap() {
     const canvas = $("#mindmapCanvas");
+    const wrap = $("#mindmapWrap");
+    const listEl = $("#mindmapList");
     const root = D.mindmap;
-    // 初始化展开状态：root 展开；lvl1 默认折叠（点击展开 lvl2）
+
     function prep(node, depth) {
       node._depth = depth;
-      node._expanded = depth === 0; // root 展开，其余折叠
+      node._expanded = depth === 0;
       (node.children || []).forEach((c) => prep(c, depth + 1));
     }
     prep(root, 0);
 
-    const H_GAP = 175, V_GAP = 116, PAD = 40;
-    let allNodes = [], nodeEls = {}, lineEls = [];
+    const H_GAP = 178, V_GAP = 120, PAD = 48;
+    let allNodes = [];
+    let panX = 0, panY = 0, scale = 1;
+    let view = "graph";
 
     function layout() {
       allNodes = [];
@@ -327,43 +331,37 @@
           node._x = (vis[0]._x + vis[vis.length - 1]._x) / 2;
         }
       })(root);
+      (function setParent(node, parent) {
+        node.parent = parent;
+        (node.children || []).forEach((c) => setParent(c, node));
+      })(root, null);
       const maxDepth = Math.max(...allNodes.map((n) => n._depth));
-      const width = Math.max(leaf * H_GAP, 200) + PAD * 2;
+      const width = Math.max(leaf * H_GAP, 220) + PAD * 2;
       const height = maxDepth * V_GAP + PAD * 2;
       canvas.style.width = width + "px";
       canvas.style.height = height + "px";
       return { width, height };
     }
 
+    function applyTransform() {
+      canvas.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+    }
+
     function render() {
-      // 先建立 parent 引用（连线绘制依赖）
-      (function setParent(node, parent) {
-        node.parent = parent;
-        (node.children || []).forEach((c) => setParent(c, node));
-      })(root, null);
       const { width, height } = layout();
       canvas.innerHTML = "";
-      nodeEls = {};
-      lineEls = [];
-      // SVG 连线层
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("width", width);
       svg.setAttribute("height", height);
-      svg.style.position = "absolute";
-      svg.style.left = "0";
-      svg.style.top = "0";
-      svg.style.pointerEvents = "none";
+      Object.assign(svg.style, { position: "absolute", left: "0", top: "0", pointerEvents: "none" });
       canvas.appendChild(svg);
 
       allNodes.forEach((node) => {
-        const cx = node._x + PAD;
-        const cy = node._depth * V_GAP + PAD;
-        node._cx = cx;
-        node._cy = cy;
-        // 连线到父节点
+        node._cx = node._x + PAD;
+        node._cy = node._depth * V_GAP + PAD;
         if (node._depth > 0) {
           const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
-          const px = node.parent._cx, py = node.parent._cy;
+          const px = node.parent._cx, py = node.parent._cy, cx = node._cx, cy = node._cy;
           const midY = (py + cy) / 2;
           line.setAttribute("d", `M ${px} ${py} C ${px} ${midY}, ${cx} ${midY}, ${cx} ${cy}`);
           line.setAttribute("stroke", "#cdb88f");
@@ -373,7 +371,6 @@
         }
       });
 
-      // 节点
       allNodes.forEach((node) => {
         const hasKids = node.children && node.children.length;
         const n = el("div", "mm-node " + node.level);
@@ -390,59 +387,165 @@
           } else if (hasKids) {
             node._expanded = !node._expanded;
             render();
+            fit();
           }
         });
-        // 展开/折叠按钮（仅对有子节点且非 root 显示于右侧）
         if (hasKids) {
           const tog = el("div", "branch-toggle", node._expanded ? "–" : "+");
-          tog.style.left = node._cx + 60 + "px";
+          tog.style.left = node._cx + 62 + "px";
           tog.style.top = node._cy + "px";
           tog.style.transform = "translate(-50%,-50%)";
           tog.addEventListener("click", (e) => {
             e.stopPropagation();
-            e.__fromToggle = true;
             node._expanded = !node._expanded;
             render();
+            fit();
           });
           canvas.appendChild(tog);
-          nodeEls[node.id] = n;
         }
         canvas.appendChild(n);
       });
     }
 
-    render();
+    /* 列表（树状手风琴）视图 */
+    function buildLeaf(node) {
+      const b = el("button", "mml-leaf",
+        `${node.label}${node.jp ? ` <span style="color:var(--gold);font-size:12px">${node.jp}</span>` : ""}`);
+      b.addEventListener("click", () => {
+        if (node.target) {
+          const s = document.getElementById(node.target);
+          if (s) s.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+      return b;
+    }
+    function buildListItem(node) {
+      const hasKids = node.children && node.children.length;
+      const item = el("div", "mml-item" + (node._expanded ? " open" : ""));
+      const head = el("button", "mml-head");
+      head.innerHTML = `<span>${node.label}${node.jp ? `<span class="jp">${node.jp}</span>` : ""}</span><span class="chev">▶</span>`;
+      const body = el("div", "mml-body");
+      if (hasKids) {
+        head.addEventListener("click", () => item.classList.toggle("open"));
+        (node.children || []).forEach((ch) => body.appendChild(buildLeaf(ch)));
+      } else {
+        head.addEventListener("click", () => {
+          if (node.target) {
+            const s = document.getElementById(node.target);
+            if (s) s.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      }
+      item.appendChild(head);
+      item.appendChild(body);
+      return item;
+    }
+    function renderList() {
+      listEl.innerHTML = "";
+      listEl.appendChild(el("div", "mml-root", root.label));
+      (root.children || []).forEach((c) => listEl.appendChild(buildListItem(c)));
+    }
 
-    // 平移
-    let panX = 0, panY = 0, dragging = false, sx = 0, sy = 0, moved = false;
-    const wrap = canvas.parentElement;
-    function applyPan() {
-      canvas.style.transform = `translate(${panX}px, ${panY}px)`;
+    /* 自适应：缩放并居中到可视区 */
+    function fit() {
+      if (view !== "graph") return;
+      const cw = parseFloat(canvas.style.width) || 1;
+      const ch = parseFloat(canvas.style.height) || 1;
+      const vw = wrap.clientWidth - 16, vh = wrap.clientHeight - 16;
+      const s = Math.min(vw / cw, vh / ch, 1.4);
+      scale = s > 0 ? s : 1;
+      panX = Math.max(0, (wrap.clientWidth - cw * scale) / 2);
+      panY = Math.max(0, (wrap.clientHeight - ch * scale) / 2);
+      applyTransform();
     }
-    function down(x, y) {
-      dragging = true; moved = false; sx = x - panX; sy = y - panY;
-    }
-    function move(x, y) {
-      if (!dragging) return;
-      panX = x - sx; panY = y - sy; moved = true; applyPan();
-    }
+
+    /* 平移 */
+    let dragging = false, sx = 0, sy = 0;
+    function down(x, y) { dragging = true; sx = x - panX; sy = y - panY; }
+    function move(x, y) { if (!dragging) return; panX = x - sx; panY = y - sy; applyTransform(); }
     function up() { dragging = false; }
-    wrap.addEventListener("mousedown", (e) => { if (e.target === canvas || e.target === wrap || e.target.tagName === "svg") down(e.clientX, e.clientY); });
+    wrap.addEventListener("mousedown", (e) => {
+      if (view !== "graph") return;
+      if (e.target === canvas || e.target === wrap || e.target.tagName === "svg") down(e.clientX, e.clientY);
+    });
     window.addEventListener("mousemove", (e) => move(e.clientX, e.clientY));
     window.addEventListener("mouseup", up);
-    wrap.addEventListener("touchstart", (e) => { const t = e.touches[0]; down(t.clientX, t.clientY); }, { passive: true });
+    wrap.addEventListener("touchstart", (e) => {
+      if (view !== "graph") return;
+      const t = e.touches[0]; if (e.target === canvas || e.target === wrap || e.target.tagName === "svg") down(t.clientX, t.clientY);
+    }, { passive: true });
     wrap.addEventListener("touchmove", (e) => { const t = e.touches[0]; move(t.clientX, t.clientY); }, { passive: true });
     wrap.addEventListener("touchend", up);
+    // 滚轮缩放（仅当内容溢出视图时拦截，避免影响页面滚动）
+    wrap.addEventListener("wheel", (e) => {
+      if (view !== "graph") return;
+      const cw = parseFloat(canvas.style.width) * scale, ch = parseFloat(canvas.style.height) * scale;
+      if (cw <= wrap.clientWidth - 10 && ch <= wrap.clientHeight - 10) return;
+      e.preventDefault();
+      scale = Math.min(Math.max(scale * (e.deltaY < 0 ? 1.12 : 1 / 1.12), 0.25), 2.6);
+      applyTransform();
+    }, { passive: false });
+
+    /* 视图切换 */
+    function setView(v) {
+      view = v;
+      $("#mmViewGraph").classList.toggle("active", v === "graph");
+      $("#mmViewList").classList.toggle("active", v === "list");
+      wrap.classList.toggle("list-mode", v === "list");
+      if (v === "graph") { render(); fit(); }
+      else { renderList(); }
+    }
+    $("#mmViewGraph").addEventListener("click", () => setView("graph"));
+    $("#mmViewList").addEventListener("click", () => setView("list"));
 
     $("#mmExpandAll").addEventListener("click", () => {
       (function set(n, v) { n._expanded = v; (n.children || []).forEach((c) => set(c, v)); })(root, true);
-      render();
+      if (view === "graph") { render(); fit(); } else renderList();
     });
     $("#mmCollapseAll").addEventListener("click", () => {
       (function set(n, v) { if (n._depth > 0) n._expanded = v; (n.children || []).forEach((c) => set(c, v)); })(root, false);
       root._expanded = true;
-      render();
+      if (view === "graph") { render(); fit(); } else renderList();
     });
+    $("#mmFit").addEventListener("click", () => { if (view === "graph") fit(); });
+
+    /* 全屏 */
+    const fsBtn = $("#mmFull");
+    if (fsBtn && wrap.requestFullscreen) {
+      fsBtn.addEventListener("click", () => {
+        if (!document.fullscreenElement) wrap.requestFullscreen();
+        else document.exitFullscreen();
+      });
+      document.addEventListener("fullscreenchange", () => {
+        const on = !!document.fullscreenElement;
+        fsBtn.textContent = on ? "⛶ 退出全屏" : "⛶ 全屏";
+        if (view === "graph") { on ? fit() : fit(); }
+      });
+    } else if (fsBtn) {
+      fsBtn.style.display = "none";
+    }
+
+    // 初始化
+    render();
+    fit();
+  }
+
+  /* ---------- 文字的本质 对比表 ---------- */
+  function renderWritingNature() {
+    const t = $("#wnTable");
+    if (!t) return;
+    const rows = [
+      ["表意文字（语素文字）", "汉字", "语素 / 词义", "是", "兼（音读近表音）", "承载实词与意义核心"],
+      ["表音·音节文字", "平假名 / 片假名", "音节（モーラ）", "否", "是", "助词、活用变形、注音"],
+      ["表音·音素文字", "罗马字", "音素", "否", "是", "输入法、对外标示（辅助）"],
+      ["临时记法", "振假名（标注用）", "读音", "否", "是（临时）", "辅助标注，不进入正式书写"]
+    ];
+    let html = `<table><thead><tr><th>文字类型</th><th>代表</th><th>挂钩单位</th><th>是否表意</th><th>是否表音</th><th>在日语中的角色</th></tr></thead><tbody>`;
+    rows.forEach((r) => {
+      html += `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`;
+    });
+    html += `</tbody></table>`;
+    t.innerHTML = html;
   }
 
   /* ---------- 导航 / 滚动 ---------- */
@@ -519,6 +622,7 @@
     renderMusic();
     renderCulture();
     renderResources();
+    renderWritingNature();
     initTabs("writingTabs");
     initTabs("pronTabs");
     initMindmap();

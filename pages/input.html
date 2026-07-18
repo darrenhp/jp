@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>输入法 · 日语综览</title>
+<meta name="description" content="从罗马字输入到手机九宫格：了解日文如何在键盘上被打出来。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-module="input">
+<header class="topnav" id="topnav"></header>
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="目录">☰</button>
+<div class="sb-overlay" id="sbOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="content">
+    <header class="page-head">
+      <h1>输入法</h1>
+      <p class="page-lead">从罗马字输入到手机九宫格：了解日文如何在键盘上被打出来。</p>
+    </header>
+    <section id="overview">
+      <h2>概览</h2>
+      <p>日语输入的本质是「罗马字/假名 → IME 转换 → 汉字假名交じり文」。理解这一链路，打字速度与准确率都会提升。</p>
+    </section>
+    <section id="list">
+      <h2>详细内容</h2>
+      <div id="inputList"></div>
+    </section>
+    <section id="keyboards">
+      <h2>键盘图示</h2>
+      <p>图文对照三种主流日文输入键盘：桌面罗马字键盘、桌面假名直输（JIS かな配列）、手机九宫格滑动键盘。每一枚键都标注了所输入的假名与罗马字读法。</p>
+      <div id="keyboardList"></div>
+    </section>
+  </main>
+</div>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

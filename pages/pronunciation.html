@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>读法与发音 · 日语综览</title>
+<meta name="description" content="五十音图（清音、浊音、半浊音）、拗音、促音、声调与母音无声化，点击任意音节即可朗读。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-module="pronunciation">
+<header class="topnav" id="topnav"></header>
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="目录">☰</button>
+<div class="sb-overlay" id="sbOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="content">
+    <header class="page-head">
+      <h1>读法与发音</h1>
+      <p class="page-lead">日语是「音节语言」，发音单位清晰、音节数有限。<strong>点击下列任意假名即可朗读</strong>（需浏览器支持语音合成）。用上方标签切换不同板块，先掌握五十音，再攻克浊音、拗音与声调。</p>
+    </header>
+
+    <div class="tabs" id="pronTabs">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="seion">清音五十音</button>
+        <button class="tab-btn" data-tab="dakuon">浊音 · 半浊音</button>
+        <button class="tab-btn" data-tab="yoon">拗音</button>
+        <button class="tab-btn" data-tab="special">促音 · 长音 · 拨音</button>
+        <button class="tab-btn" data-tab="accent">声调与语音现象</button>
+        <button class="tab-btn" data-tab="practice">练习建议</button>
+      </div>
+
+      <div class="tab-panel active" data-panel="seion">
+        <h2 id="seion">清音五十音</h2>
+        <p>五十音图按「あ・か・さ・た・な・は・ま・や・ら・わ・ん」十行、五段排列。实际常用清音为 46 个（含 archaic い/ゐ/う/ゑ 等旧假名，现代通用 46）。<span class="speak" data-speak="あいうえお">朗读あ段</span></p>
+        <div class="kana-grid" id="kanaSeion"></div>
+      </div>
+
+      <div class="tab-panel" data-panel="dakuon">
+        <h2 id="dakuon">浊音 · 半浊音</h2>
+        <p>在か/さ/た/は行清音右上加浊点（゛）成浊音が/ざ/だ/ば；は行加半浊点（゜）成半浊音ぱ。发音时声带振动（浊音）或送气强（半浊音）。<span class="speak" data-speak="がぎぐげご">朗读が行</span></p>
+        <div class="kana-grid" id="kanaDakuon"></div>
+      </div>
+
+      <div class="tab-panel" data-panel="yoon">
+        <h2 id="yoon">拗音</h2>
+        <p>由「い段假名 + 小写的や/ゆ/よ」拼成，占一拍，如 <span class="jp">きゃ</span> キャ (kya)。可再加浊点成拗浊音（ぎゃ ギャ）。<span class="speak" data-speak="きゃきゅきょ">朗读拗音</span></p>
+        <div class="kana-grid" id="kanaYoon"></div>
+      </div>
+
+      <div class="tab-panel" data-panel="special">
+        <h2 id="special">特殊发音：促音 · 长音 · 拨音</h2>
+        <div id="kanaSpecial" class="kana-special"></div>
+      </div>
+
+      <div class="tab-panel" data-panel="accent">
+        <h2 id="accent">声调与语音现象</h2>
+        <p>日语靠<strong>音高（高低型）</strong>而非轻重区分词义，这与中文的声调截然不同。<span class="speak" data-speak="はし">朗读はし（桥/筷子）</span></p>
+        <div id="kanaAccent" class="kana-accent"></div>
+      </div>
+
+      <div class="tab-panel" data-panel="practice">
+        <h2 id="practice">发音练习建议</h2>
+        <ul>
+          <li>先熟记清音，再叠加浊音/拗音，避免混淆。</li>
+          <li>用「促音停顿、长音拉长、拨音归鼻」三个口诀校正节奏。</li>
+          <li>借助上方朗读按钮<strong>跟读模仿</strong>，注意母音无声化与声调高低。</li>
+          <li>推荐 NHK 发音讲座与影子跟读（shadowing）训练。</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="../assets/js/data.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>

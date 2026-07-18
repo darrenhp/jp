@@ -4,308 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>日本語の世界 · 日语综合介绍</title>
-  <meta name="description" content="一个现代化、交互性强的日语综合介绍网站：涵盖日语历史、文字系统、语法、发音、日常用语、输入法、JLPT、音乐与文化。" />
+  <meta name="description" content="和风日语综合介绍：历史、文字、语法、发音、日常用语、输入法、JLPT、音乐与文化。每个模块独立成页，配交互式知识导图。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/vendor/jsmind/jsmind.css" />
 </head>
 <body>
-  <!-- 装饰：飘落樱花 -->
   <div class="sakura-layer" id="sakuraLayer" aria-hidden="true"></div>
 
-  <!-- 顶部固定导航栏 -->
-  <header class="topnav" id="topnav">
-    <a href="#home" class="brand">
-      <span class="brand-mark">日</span>
-      <span class="brand-text">日本語の世界</span>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-label="展开导航">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links" id="navLinks">
-      <a href="#mindmap" data-jp="マップ">导图</a>
-      <a href="#history" data-jp="歴史">历史</a>
-      <a href="#writing" data-jp="文字">文字</a>
-      <a href="#grammar" data-jp="文法">语法</a>
-      <a href="#pronunciation" data-jp="発音">发音</a>
-      <a href="#phrases" data-jp="会話">用语</a>
-      <a href="#input" data-jp="入力">输入</a>
-      <a href="#jlpt" data-jp="JLPT">等级</a>
-      <a href="#music" data-jp="音楽">音乐</a>
-      <a href="#culture" data-jp="文化">文化</a>
-      <a href="#resources" data-jp="学習">资源</a>
-    </nav>
-  </header>
+  <header class="topnav" id="topnav"></header>
 
-  <main>
-    <!-- 首屏 -->
-    <section class="hero" id="home">
-      <div class="hero-inner">
-        <p class="hero-kicker">にほんご · Nihongo</p>
-        <h1 class="hero-title">日本語の世界へ<span class="hero-sub">走进日语的世界</span></h1>
-        <p class="hero-desc">
-          从绳文时代的古老语言到今日的现代日语，从假名的优美曲线到敬语的微妙层次。
-          这是一个交互式的日语知识全景——点击、聆听、探索。
-        </p>
-        <div class="hero-actions">
-          <a href="#mindmap" class="btn btn-primary">开启知识导图</a>
-          <a href="#pronunciation" class="btn btn-ghost">🔊 听一听五十音</a>
-        </div>
-        <div class="hero-stats">
-          <div><strong>46</strong><span>清音音节</span></div>
-          <div><strong>3</strong><span>文字体系</span></div>
-          <div><strong>5</strong><span>JLPT 等级</span></div>
-          <div><strong>1300+</strong><span>年语言史</span></div>
-        </div>
-      </div>
-      <div class="hero-ring" aria-hidden="true">
-        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
-        <span class="ring-char">語</span>
-      </div>
-    </section>
+  <section class="hub-hero">
+    <span class="hbadge">和风 · 日语综览</span>
+    <h1>日本語の世界</h1>
+    <p>一个现代化、交互性强的日语综合介绍站。从汉字与假名的混写之美，到动词在句尾的优雅秩序——十个模块，各自成页，由一张交互式知识导图串联。</p>
+  </section>
 
-    <!-- 交互式思维导图 -->
-    <section class="section" id="mindmap">
-      <div class="section-head">
-        <span class="sec-index">00</span>
-        <h2 class="sec-title">日语知识思维导图</h2>
-        <p class="sec-lead">一张可展开、可折叠的交互地图。点击任意节点查看分支，点击叶子节点直达对应板块。</p>
-      </div>
-      <div class="mindmap-toolbar">
-        <button class="mm-btn" id="mmExpandAll">全部展开</button>
-        <button class="mm-btn" id="mmCollapseAll">全部折叠</button>
-        <span class="mm-hint">提示：拖拽空白处可平移视图</span>
-      </div>
-      <div class="mindmap-wrap">
-        <div class="mindmap-canvas" id="mindmapCanvas"></div>
-      </div>
-    </section>
-
-    <!-- 1. 历史 -->
-    <section class="section" id="history">
-      <div class="section-head">
-        <span class="sec-index">01</span>
-        <h2 class="sec-title">日语的起源与历史发展</h2>
-        <p class="sec-lead">一条跨越千年的语言演变脉络，从口头传颂到书写成章。</p>
-      </div>
-
-      <div class="timeline" id="historyTimeline"></div>
-
-      <div class="prose">
-        <h3>语系之争：日语到底属于哪一族？</h3>
-        <p>
-          日语的语系归属至今仍是语言学界的未解之谜。主流假说包括「阿尔泰语系说」（与突厥、蒙古、满通古斯语言同源）、
-          「澳泰语系说」（与南岛语系相关）以及「孤立语言说」。日语最显著的类型学特征——
-          <strong>SOV 语序、黏着语性质、丰富的助词系统、发达的敬语</strong>——与阿尔泰语系高度相似，
-          但词汇层面又显示出与南岛语系的某些对应。无论归属如何，日语在东亚语言圈中始终保持着鲜明的独特性。
-        </p>
-        <h3>汉字的传入：一次文明级的输入</h3>
-        <p>
-          公元 4–5 世纪，汉字随佛教与儒教经朝鲜半岛（百济）传入日本。当时日本尚无文字，
-          因而直接借用汉字记录日语，先后出现「训读」（以汉字表日语音义）与「音读」（以汉字表汉语音）。
-          这一借用深刻塑造了日语的词汇层：至今日语中仍并存着「和语（やまとことば）」「汉字词（汉语）」「外来语」三大语源。
-        </p>
-      </div>
-    </section>
-
-    <!-- 2. 文字系统 -->
-    <section class="section" id="writing">
-      <div class="section-head">
-        <span class="sec-index">02</span>
-        <h2 class="sec-title">文字系统</h2>
-        <p class="sec-lead">平假名、片假名、汉字、罗马字——四种文字在同一行文中和谐共生。</p>
-      </div>
-
-      <div class="tabs" id="writingTabs">
-        <div class="tab-bar">
-          <button class="tab-btn active" data-tab="hiragana">平假名</button>
-          <button class="tab-btn" data-tab="katakana">片假名</button>
-          <button class="tab-btn" data-tab="kanji">汉字</button>
-          <button class="tab-btn" data-tab="romaji">罗马字</button>
-        </div>
-        <div class="tab-panels">
-          <div class="tab-panel active" data-panel="hiragana">
-            <p class="tab-intro">平假名源于汉字的草书，是女性与和歌的书写主体，今为日语表音核心。每一字符都有可点击的发音与笔顺动画。</p>
-            <div class="kana-grid" id="kanaHiragana"></div>
-          </div>
-          <div class="tab-panel" data-panel="katakana">
-            <p class="tab-intro">片假名取汉字楷书的偏旁，用于外来语、拟声词、强调。与平假名一一对应，发音相同。</p>
-            <div class="kana-grid" id="kanaKatakana"></div>
-          </div>
-          <div class="tab-panel" data-panel="kanji">
-            <p class="tab-intro">汉字表意，承载词汇的「根」。以下为常用基础汉字，含音读（On）、训读（Kun）与例词。</p>
-            <div class="kanji-grid" id="kanjiGrid"></div>
-          </div>
-          <div class="tab-panel" data-panel="romaji">
-            <p class="tab-intro">罗马字以拉丁字母转写日语，用于输入法与对外标示。主要有「训令式」「平文式（Hepburn）」等转写体系。</p>
-            <div class="romaji-table" id="romajiTable"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="prose">
-        <h3>混写：日语书写的独特风景</h3>
-        <p>
-          现代日语采用「汉字 + 假名」的混写体：汉字承载实词的核心语义，平假名承担助词、活用变形与送假名，
-          片假名标记外来语。例如「<ruby>私<rt>わたし</rt></ruby>は<ruby>学生<rt>がくせい</rt></ruby>です」
-          ——同一句话里三种文字各司其职。这种混写既节省篇幅，又借助汉字降低同音歧义，是日本读写效率的关键。
-        </p>
-      </div>
-    </section>
-
-    <!-- 3. 语法 -->
-    <section class="section" id="grammar">
-      <div class="section-head">
-        <span class="sec-index">03</span>
-        <h2 class="sec-title">语法体系</h2>
-        <p class="sec-lead">黏着、SOV、靠助词串起意义——理解日语语法的三把钥匙。</p>
-      </div>
-
-      <div class="grammar-cards" id="grammarCards"></div>
-
-      <div class="prose">
-        <h3>动词变形全景：以「書く」为例</h3>
-        <p>日语动词通过黏着助动词表达时态、礼貌、接续。下表展示五段动词「書く（写）」的核心活用形：</p>
-        <div class="conjugation-table" id="conjugationTable"></div>
-        <h3>敬语的三层结构</h3>
-        <p>
-          <strong>尊敬语（そんけいご）</strong>抬高对方行为；<strong>谦让语（けんじょうご）</strong>压低自己以示尊重；
-          <strong>丁宁语（ていねいご）</strong>以「です・ます」营造礼貌基调。三者叠加构成日本社会的人际润滑剂。
-        </p>
-      </div>
-    </section>
-
-    <!-- 4. 发音 -->
-    <section class="section" id="pronunciation">
-      <div class="section-head">
-        <span class="sec-index">04</span>
-        <h2 class="sec-title">读法与发音</h2>
-        <p class="sec-lead">五十音图为纲，浊音、拗音、促音为辅。点击任意音节即可聆听标准读音。</p>
-      </div>
-
-      <div class="audio-note" id="audioNote">
-        🔊 点击表格中的任意假名即可用浏览器语音合成朗读（日语）。若设备无声，请确认浏览器支持语音合成并已开启声音。
-      </div>
-
-      <div class="tabs" id="pronTabs">
-        <div class="tab-bar">
-          <button class="tab-btn active" data-tab="seion">清音 五十音</button>
-          <button class="tab-btn" data-tab="dakuon">浊音・半浊音</button>
-          <button class="tab-btn" data-tab="yoon">拗音</button>
-          <button class="tab-btn" data-tab="special">促音・长音</button>
-          <button class="tab-btn" data-tab="accent">声调・无声化</button>
-        </div>
-        <div class="tab-panels">
-          <div class="tab-panel active" data-panel="seion">
-            <div class="gojuon" id="gojuonSeion"></div>
-          </div>
-          <div class="tab-panel" data-panel="dakuon">
-            <div class="gojuon" id="gojuonDakuon"></div>
-          </div>
-          <div class="tab-panel" data-panel="yoon">
-            <div class="gojuon yoon" id="gojuonYoon"></div>
-          </div>
-          <div class="tab-panel" data-panel="special">
-            <div class="special-pron" id="specialPron"></div>
-          </div>
-          <div class="tab-panel" data-panel="accent">
-            <div class="accent-box" id="accentBox"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. 日常用语 -->
-    <section class="section" id="phrases">
-      <div class="section-head">
-        <span class="sec-index">05</span>
-        <h2 class="sec-title">常用日常用语</h2>
-        <p class="sec-lead">按场景分类，含假名注音、罗马字与中文释义，点击喇叭可朗读。</p>
-      </div>
-      <div class="phrase-filter" id="phraseFilter"></div>
-      <div class="phrase-grid" id="phraseGrid"></div>
-    </section>
-
-    <!-- 6. 输入法 -->
-    <section class="section" id="input">
-      <div class="section-head">
-        <span class="sec-index">06</span>
-        <h2 class="sec-title">日语输入法</h2>
-        <p class="sec-lead">从罗马字到假名直输，从桌面 IME 到手机键盘。</p>
-      </div>
-      <div class="input-cols" id="inputCols"></div>
-      <div class="prose">
-        <h3>IME 转换的奥义</h3>
-        <p>
-          输入罗马字（如 <code>konnichiwa</code>）后，输入法给出「今日は」等候选。
-          日文输入的核心难点不在打字，而在<strong>汉字/假名的转换选择</strong>。熟练者依赖预测转换与字典学习，
-          并善用「<code>Space</code> 候选切换」「<code>Tab</code> 送假名调整」等快捷键。
-        </p>
-      </div>
-    </section>
-
-    <!-- 7. JLPT -->
-    <section class="section" id="jlpt">
-      <div class="section-head">
-        <span class="sec-index">07</span>
-        <h2 class="sec-title">JLPT 等级说明</h2>
-        <p class="sec-lead">日本语能力测试 N5–N1，从入门到近母语者的阶梯。</p>
-      </div>
-      <div class="jlpt-cards" id="jlptCards"></div>
-    </section>
-
-    <!-- 8. 音乐文化 -->
-    <section class="section" id="music">
-      <div class="section-head">
-        <span class="sec-index">08</span>
-        <h2 class="sec-title">日语音乐文化</h2>
-        <p class="sec-lead">演歌的哀愁、J-POP 的跃动、Vocaloid 的虚拟心跳。</p>
-      </div>
-      <div class="music-cards" id="musicCards"></div>
-    </section>
-
-    <!-- 9. 文化关联 -->
-    <section class="section" id="culture">
-      <div class="section-head">
-        <span class="sec-index">09</span>
-        <h2 class="sec-title">文化关联</h2>
-        <p class="sec-lead">语言是文化的容器：敬语、俳句、祭典、动漫，皆藏于字词之间。</p>
-      </div>
-      <div class="culture-grid" id="cultureGrid"></div>
-      <div class="prose">
-        <h3>俳句：十七音里的四季</h3>
-        <p>
-          俳句以「5-7-5」共十七音组成，必含「季语（きご）」点明季节。松尾芭蕉的
-          「<ruby>古池<rt>ふるいけ</rt></ruby>や<ruby>蛙<rt>かわず</rt></ruby>とびこむ<ruby>水<rt>みず</rt></ruby>の<ruby>音<rt>おと</rt></ruby>」
-          以极简音律封存一瞬禅意——这正是日语「以少胜多」美学的写照。
-        </p>
-      </div>
-    </section>
-
-    <!-- 10. 学习资源 -->
-    <section class="section" id="resources">
-      <div class="section-head">
-        <span class="sec-index">10</span>
-        <h2 class="sec-title">学习资源</h2>
-        <p class="sec-lead">从教材到 APP，从考试到沉浸，搭好你的学习脚手架。</p>
-      </div>
-      <div class="res-cols" id="resCols"></div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p class="footer-jp">日本語を学ぶ旅、始まったばかり。</p>
-      <p>日语学习之旅，才刚刚开始。· 本站为教育用途的交互式介绍，发音由浏览器语音合成提供。</p>
-      <p class="footer-meta">© 2026 日本語の世界 · 和风视觉 · 全响应式</p>
+  <section class="hub-section" id="mindmap">
+    <div class="hs-head">
+      <h2>交互式知识导图</h2>
+      <p>日语知识体系一图总览。点击节点跳转对应模块，拖拽平移、滚轮缩放，可切换「导图 / 列表」视图并全屏查看。</p>
     </div>
+    <div class="mindmap-toolbar">
+      <button class="mm-btn active" id="mmViewGraph">导图视图</button>
+      <button class="mm-btn" id="mmViewList">列表视图</button>
+      <button class="mm-btn" id="mmExpandAll">全部展开</button>
+      <button class="mm-btn" id="mmCollapseAll">全部折叠</button>
+      <button class="mm-btn" id="mmFit">回到中心</button>
+      <button class="mm-btn" id="mmFull">⛶ 全屏</button>
+      <span class="mm-hint">点击节点跳转对应模块 · 节点上的 +/− 可展开折叠</span>
+    </div>
+    <div class="mindmap-wrap" id="mindmapWrap">
+      <div class="mindmap-canvas" id="mindmapCanvas"></div>
+      <div class="mindmap-list" id="mindmapList"></div>
+    </div>
+  </section>
+
+  <section class="hub-section" id="modules">
+    <div class="hs-head">
+      <h2>十大模块</h2>
+      <p>每个模块都是独立子页面，含左侧边栏结构导航与页内目录，内容详实可深读。</p>
+    </div>
+    <div class="mod-grid" id="modGrid"></div>
+  </section>
+
+  <footer class="site-foot">
+    <p>日本語の世界 · 和风日语综览 ｜ 内容仅供学习参考</p>
   </footer>
 
-  <!-- 回到顶部 -->
-  <button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
-
   <script src="assets/js/data.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/vendor/jsmind/jsmind.js"></script>
+  <script src="assets/js/mindmap.js"></script>
+  <script src="assets/js/hub.js"></script>
 </body>
 </html>

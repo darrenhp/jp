@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>文字系统 · 日语综览</title>
+<meta name="description" content="日语文字的本质：汉字是表意文字、假名是表音音节文字、罗马字是辅助记法——四种文字为何混写。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-module="writing">
+<header class="topnav" id="topnav"></header>
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="目录">☰</button>
+<div class="sb-overlay" id="sbOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="content">
+    <header class="page-head">
+      <h1>文字系统</h1>
+      <p class="page-lead">平假名、片假名、汉字、罗马字——四种文字在同一行文中和谐共生。但一个根本问题常被忽略：日语的文字，到底是表音、表意，还是一种「记法」？</p>
+    </header>
+
+    <section id="nature">
+      <h2>日语的文字，到底是什么？</h2>
+      <p>先给结论：<strong>日语不是「记法」，而是一套成熟的混合文字体系</strong>。正式书写靠汉字 + 假名，罗马字只是辅助注音，并不承担日常书写。</p>
+      <div class="kana-legend">
+        <span><i style="background:var(--shu)"></i>表意（语素文字）</span>
+        <span><i style="background:var(--ai)"></i>表音（音节/音素文字）</span>
+        <span><i style="background:var(--matcha)"></i>辅助记法</span>
+      </div>
+      <div class="doc-table-wrap">
+        <table class="doc-table">
+          <thead><tr><th>文字类型</th><th>代表</th><th>挂钩单位</th><th>表意？</th><th>表音？</th><th>在日语中的角色</th></tr></thead>
+          <tbody>
+            <tr><td><strong>汉字</strong></td><td class="jp">山 川 愛</td><td>语素 / 词</td><td>✅ 是</td><td>❌ 否</td><td>承载实词意义，消歧同音词</td></tr>
+            <tr><td><strong>平/片假名</strong></td><td class="jp">あア かカ</td><td>音节</td><td>❌ 否</td><td>✅ 是</td><td>语法功能（助词、活用）、和语、外来语</td></tr>
+            <tr><td><strong>罗马字</strong></td><td>shi / ka</td><td>音素</td><td>❌ 否</td><td>✅ 是</td><td>输入、路牌、外国人注音等辅助用途</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>它从来不是「记法」</h3>
+      <p>所谓「记法」（如汉语拼音、日语罗马字），是用一套符号去<em>临时标注</em>另一套文字的读音，自身不进入正式书写。而日文里，汉字与假名是<strong>书写本体</strong>——你写的就是它，而非「标」在别的文字之上。给汉语标的「拼音」才是记法；日文本身不是。</p>
+      <h3>从「记法」到「文字」的演化</h3>
+      <p>有趣的是，日语的假名确实<strong>源于记法</strong>：上古日本人用「万叶假名」把汉字当纯表音符号（那才是记法）。但千年间，这些汉字被不断简化、定型，最终脱离汉字原形，成为正式的<strong>表音文字</strong>——假名。记法「进化」成了文字。</p>
+      <h3>为什么偏偏要「混着写」？</h3>
+      <p>日语<strong>同音异义极多</strong>（如「橋/箸/端」都读 hashí）。若全用假名，阅读会严重歧义；若全用汉字，又无法标记助词与动词活用。于是：<strong>汉字以形表义消歧，假名扛语法与屈折</strong>——这套「汉字假名交じり文」是读写效率的最优解。</p>
+    </section>
+
+    <section id="kanji">
+      <h2>汉字：表意文字（语素文字）</h2>
+      <p>汉字传入日本后，每个字带来「音读」（吴音、汉音、唐音，模拟汉语读音）与「训读」（用既有的和语词去对应字义，如「山」读 <span class="jp">やま</span>）。</p>
+      <table class="doc-table">
+        <thead><tr><th>汉字</th><th>音读</th><th>训读</th><th>例</th></tr></thead>
+        <tbody>
+          <tr><td class="jp">日</td><td>ニチ</td><td>ひ</td><td>日本（にほん）</td></tr>
+          <tr><td class="jp">月</td><td>ゲツ</td><td>つき</td><td>月（つき）</td></tr>
+          <tr><td class="jp">水</td><td>スイ</td><td>みず</td><td>水（みず）</td></tr>
+          <tr><td class="jp">学生</td><td>ガクセイ</td><td>—</td><td>学生（がくせい）</td></tr>
+          <tr><td class="jp">食</td><td>ショク</td><td>た</td><td>食べる（たべる）</td></tr>
+        </tbody>
+      </table>
+      <p>现代日语常用汉字约 2000+（「常用汉字表」），专有名词另含大量表外字。汉字承担名词、汉字词根与实词主体。</p>
+    </section>
+
+    <section id="hiragana">
+      <h2>平假名：表音 · 音节文字</h2>
+      <p>由汉字<strong>草书</strong>简化而来（如「安」→「あ」、「以」→「い」）。曲线柔美，用于：</p>
+      <ul>
+        <li>语法附属词：助词（は・を・に）、助动词（ます・たい）</li>
+        <li>和语词汇（无对应汉字或习惯写假名者，如「こんにちは」「ありがとう」）</li>
+        <li>送假名：动词/形容词的词尾活用部分</li>
+      </ul>
+    </section>
+
+    <section id="katakana">
+      <h2>片假名：表音 · 音节文字</h2>
+      <p>取自汉字<strong>楷体偏旁</strong>（如「阿」→「ア」、「加」→「カ」）。笔画方正，主要用于：</p>
+      <ul>
+        <li><strong>外来语与拟声拟态词</strong>：「コーヒー」「テレビ」「ドキドキ」</li>
+        <li>强调、招牌、生物/矿物学名</li>
+        <li>拟音（动物叫、效果音）</li>
+      </ul>
+    </section>
+
+    <section id="romaji">
+      <h2>罗马字：表音 · 音素文字（辅助）</h2>
+      <p>用拉丁字母标注读音，主要有<strong>平文式（Hepburn）</strong>与<strong>训令式</strong>。它不进入日常书写，用途限于：</p>
+      <ul>
+        <li>日语输入法（罗马字输入）</li>
+        <li>路标、护照姓名、外国人学习注音</li>
+        <li>编程语言、化学式等技术场景</li>
+      </ul>
+    </section>
+
+    <section id="mix">
+      <h2>混写规则：何时用哪个？</h2>
+      <p>日语的「汉字假名交じり文」有大致惯例：</p>
+      <ul>
+        <li><strong>实词用汉字</strong>：名词、汉字动词/形容词的词干（食べる、赤い）。</li>
+        <li><strong>虚词用假名</strong>：は・が・を・に・で等助词一律假名。</li>
+        <li><strong>送假名</strong>：活用部分写假名（「書く」而非「書ク」）。</li>
+        <li><strong>外来语用片假名</strong>：バス、コンピュータ。</li>
+      </ul>
+      <div class="callout warn"><span class="ct">常见误区</span>汉字并非「越多越高级」。过度汉字化（汉字片仮名交じり）反而难读；正式文章讲究汉字与假名的平衡。</div>
+    </section>
+
+    <section id="calligraphy">
+      <h2>字体与书法</h2>
+      <p>假名书道（かな書道）将文字视为艺术：楷书端正、行书流畅、草书连绵。书法的「余白」与「线的呼吸」，正是日语文化中「留白美学」的体现——文字既是信息，也是韵律。</p>
+    </section>
+  </main>
+</div>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>
